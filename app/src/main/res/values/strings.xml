@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Chattos</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello</string>
+    <string name="followers">Người theo dõi</string>
+    <string name="following">Đang theo dõi</string>
+    <string name="posts">Bài đăng</string>
+    <string name="add_description">Thêm mô tả</string>
+
+</resources>
