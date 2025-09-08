@@ -61,8 +61,8 @@ import com.marsad.catchy.R;
 import com.marsad.catchy.chat.ChatActivity;
 import com.marsad.catchy.model.PostImageModel;
 import com.marsad.stylishdialogs.StylishAlertDialog;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
+//import com.theartofdev.edmodo.cropper.CropImage;
+//import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -257,10 +257,10 @@ public class Profile extends Fragment {
 
         assert getContext() != null;
 
-        editProfileBtn.setOnClickListener(v -> CropImage.activity()
-                .setGuidelines(CropImageView.Guidelines.ON)
-                .setAspectRatio(1, 1)
-                .start(getContext(), Profile.this));
+//        editProfileBtn.setOnClickListener(v -> CropImage.activity()
+//                .setGuidelines(CropImageView.Guidelines.ON)
+//                .setAspectRatio(1, 1)
+//                .start(getContext(), Profile.this));
 
         startChatBtn.setOnClickListener(v -> {
             queryChat();
@@ -581,18 +581,18 @@ public class Profile extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-
-            if (result == null)
-                return;
-
-            Uri uri = result.getUri();
-
-            uploadImage(uri);
-
-        }
+//        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+//
+//            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+//
+//            if (result == null)
+//                return;
+//
+//            Uri uri = result.getUri();
+//
+//            uploadImage(uri);
+//
+//        }
 
     }
 

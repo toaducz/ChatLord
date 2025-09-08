@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.marsad.catchy.fragments.Add;
-import com.marsad.catchy.fragments.Home;
+import com.marsad.catchy.fragments.HomeFragment;
 import com.marsad.catchy.fragments.Notification;
 import com.marsad.catchy.fragments.Profile;
 import com.marsad.catchy.fragments.Search;
@@ -28,7 +28,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
             default:
                 case 0:
-                    return new Home();
+                    return new HomeFragment();
 
             case 1:
                 return new Search();

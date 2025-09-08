@@ -17,7 +17,8 @@ import java.util.List;
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryHolder> {
 
-    SendImage onSendImage;
+    // Renamed interface and variable
+    OnImageSelectedListener onImageSelectedListener;
     List<GalleryImages> list;
 
     public GalleryAdapter(List<GalleryImages> list) {
@@ -36,19 +37,31 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryH
     @Override
     public void onBindViewHolder(@NonNull GalleryHolder holder, int position) {
 
-        Glide.with(holder.itemView.getContext().getApplicationContext())
+        Glide.with(holder.itemView.getContext())
                 .load(list.get(position).getPicUri())
+                // Add a placeholder and error drawable for better UX
+                .placeholder(R.drawable.ic_launcher_background) // Replace with your actual placeholder
+                .error(R.drawable.ic_launcher) // Replace with your actual error image
                 .into(holder.imageView);
 
-        holder.imageView.setOnClickListener(v -> chooseImage(list.get(holder.getAbsoluteAdapterPosition()).getPicUri()));
+        holder.imageView.setOnClickListener(v -> {
+            if (onImageSelectedListener != null) {
+                // Ensure position is valid, especially if items can be removed rapidly
+                int currentPosition = holder.getBindingAdapterPosition();
+                if (currentPosition != RecyclerView.NO_POSITION) {
+                    onImageSelectedListener.onImageSelected(list.get(currentPosition).getPicUri());
+                }
+            }
+        });
 
     }
 
-    private void chooseImage(Uri picUri) {
-
-        onSendImage.onSend(picUri);
-
-    }
+    // This private method is no longer needed as the logic is inlined in setOnClickListener
+    // private void chooseImage(Uri picUri) {
+    //    if (onImageSelectedListener != null) {
+    //        onImageSelectedListener.onImageSelected(picUri);
+    //    }
+    // }
 
 
     @Override
@@ -56,12 +69,13 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryH
         return list.size();
     }
 
-    public void SendImage(SendImage sendImage) {
-        this.onSendImage = sendImage;
+    // Renamed method and interface
+    public void setOnImageSelectedListener(OnImageSelectedListener listener) {
+        this.onImageSelectedListener = listener;
     }
 
-    public interface SendImage {
-        void onSend(Uri picUri);
+    public interface OnImageSelectedListener {
+        void onImageSelected(Uri picUri);
     }
 
     static class GalleryHolder extends RecyclerView.ViewHolder {
@@ -71,7 +85,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryH
         public GalleryHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView);
-
         }
     }
 

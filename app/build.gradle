@@ -1,14 +1,15 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'org.jetbrains.kotlin.android' // Added Kotlin plugin
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 35
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.marsad.catchy"
-        minSdkVersion 19
-        targetSdkVersion 32
+        minSdkVersion 23
+        targetSdkVersion 35
         multiDexEnabled true
         versionCode 1
         versionName "1.0"
@@ -17,8 +18,13 @@ android {
     }
 
     buildTypes {
-        release {
+        debug {
             minifyEnabled false
+            shrinkResources false
+            // proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        release {
+            minifyEnabled false // As per your existing config
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -27,50 +33,66 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    namespace 'com.marsad.catchy'
 
+    kotlinOptions { // Added kotlinOptions
+        jvmTarget = '1.8'
+    }
+
+    namespace 'com.marsad.catchy'
 }
 
 dependencies {
+    implementation platform('org.jetbrains.kotlin:kotlin-bom:2.0.0') // Added Kotlin BOM
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib' // Added kotlin-stdlib (version managed by BOM)
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android' // Added coroutines (version managed by BOM)
+    // implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core' // Also common, add if needed (managed by BOM)
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
-
     implementation 'androidx.multidex:multidex:2.0.1'
-
     implementation 'com.google.android.material:material:1.6.0'
-    implementation('androidx.cardview:cardview:1.0.0')
-    implementation('androidx.recyclerview:recyclerview:1.2.1')
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
-    implementation 'com.google.firebase:firebase-auth:21.0.4'
-    implementation 'com.google.firebase:firebase-firestore:24.1.2'
-    implementation 'com.google.firebase:firebase-storage:20.0.1'
+    // Import the Firebase BoM
+    implementation platform('com.google.firebase:firebase-bom:34.2.0')
+
+    // Declare the dependencies for the Firebase products you want to use
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-firestore'
+    implementation 'com.google.firebase:firebase-storage'
+    implementation 'com.google.firebase:firebase-messaging'
+
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.android.gms:play-services-auth:20.2.0'
 
-    // FirebaseUI for Cloud Firestore
-    implementation 'com.firebaseui:firebase-ui-firestore:7.1.0'
+    // FirebaseUI (Firestore) - This might also benefit from BoM if a FirebaseUI BoM exists, or check compatibility
+    implementation 'com.firebaseui:firebase-ui-firestore:8.0.2'
 
-    //ExoPlayer
+    // ExoPlayer (play video/audio)
     implementation 'com.google.android.exoplayer:exoplayer:2.17.1'
 
-
+    // Permission
     implementation 'com.karumi:dexter:6.2.2'
 
+    // UI dialogs
     implementation 'com.github.MarsadMaqsood:StylishDialogs:0.1.7'
 
-    implementation 'com.github.a914-gowtham:android-video-trimmer:1.7.0'
-
-    api 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
-
+    // Avatar / Rounded ImageView
     implementation 'de.hdodenhof:circleimageview:3.1.0'
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
 
+    // Glide (image loading)
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    implementation 'androidx.credentials:credentials:1.5.0'
+    implementation 'androidx.credentials:credentials-play-services-auth:1.5.0'
+    implementation 'com.google.android.libraries.identity.googleid:googleid:1.1.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 
+    // Test
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-
-
 }
+

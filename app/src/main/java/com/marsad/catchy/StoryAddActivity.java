@@ -23,9 +23,9 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.gowtham.library.utils.CompressOption;
-import com.gowtham.library.utils.TrimType;
-import com.gowtham.library.utils.TrimVideo;
+//import com.gowtham.library.utils.CompressOption;
+//import com.gowtham.library.utils.TrimType;
+//import com.gowtham.library.utils.TrimVideo;
 import com.marsad.stylishdialogs.StylishAlertDialog;
 
 import java.io.File;
@@ -51,7 +51,7 @@ public class StoryAddActivity extends AppCompatActivity {
                         result.getData() != null) {
 
 
-                    Uri uri = Uri.parse(TrimVideo.getTrimmedVideoPath(result.getData()));
+                    Uri uri = Uri.parse("null");
 
                     videoView.setVideoURI(uri);
                     videoView.start();
@@ -228,12 +228,12 @@ public class StoryAddActivity extends AppCompatActivity {
                 });
 
             } else if (uri.toString().contains("video")) {
-                TrimVideo.activity(String.valueOf(uri))
-                        .setCompressOption(new CompressOption())
-                        .setTrimType(TrimType.MIN_MAX_DURATION)
-                        .setMinToMax(5, 30)
-                        .setHideSeekBar(true)
-                        .start(this, startForResult);
+//                TrimVideo.activity(String.valueOf(uri))
+//                        .setCompressOption(new CompressOption())
+//                        .setTrimType(TrimType.MIN_MAX_DURATION)
+//                        .setMinToMax(5, 30)
+//                        .setHideSeekBar(true)
+//                        .start(this, startForResult);
             }
 
 
